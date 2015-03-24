@@ -5,5 +5,8 @@
 *
 * Main module of application.
 */
-var savApp = angular.module('savApp', ['ngRoute','CodeGeneration']);
-
+var savApp = angular.module('savApp', [
+	'ngRoute',
+	'savControllers',
+	'savServices'
+]);

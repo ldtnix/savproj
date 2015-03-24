@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="SAVProj" ng-strict-di>
+<html ng-app="savApp" ng-strict-di>
 <head>
 <meta charset="utf-8">
 <meta name="description" content="">
@@ -30,11 +30,25 @@
 				<li><a href="#/result">Xem kết quả Vote</a></li>
 			</ul>
 		</div>
+
+		<!-- Just for test the navigation-->
+		<div>
+			<a href="/home">Home</a>
+	        &mdash;
+	        <a href="/create/step1">Step 1</a>
+	        &mdash;
+	        <a href="/create/step2">Step 2</a>
+	        &mdash;
+	        <a href="/create/step3">Step 3</a>
+	        &mdash;
+	        <a href="/show/voteURL">Show vote</a>
+		</div>
 	</nav>
 	<!--  End Navigation here -->
 
 	<div ng-view></div>
-	<div class="footer">Copyright(r) by T&T (KMS Technology)</div>
+
+	<div class="footer">Copyright(r) by T&T</div>
 	<script src="vendor/angular/angular.js"></script>
 	<script src="vendor/angular-route/angular-route.js"></script>
 	<script src="js/app.js"></script>

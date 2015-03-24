@@ -1,6 +1,8 @@
 'use strict';
 
-SAVProject.factory('CodeGeneration', function() {
+var savServices = angular.module('savServices',[]);
+
+savServices.factory('CodeGeneration', function() {
 	return {
 		generate : function() {
 			var str = new Array(5).join().replace(/(.|$)/g, function() {

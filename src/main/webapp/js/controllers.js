@@ -1,7 +1,9 @@
 'use strict';
 
+var savControllers = angular.module('savControllers', []);
+
 // HomeController
-savApp.controller('HomeCtrl', ['$scope','CodeGeneration',function($scope,CodeGeneration) {
+savControllers.controller('HomeCtrl', ['$scope','CodeGeneration',function($scope,CodeGeneration) {
 	// Create Secret Code
 	// This code will be used to access vote or generate Vote URL
 	$scope.secretCode = CodeGeneration.generate();
@@ -10,12 +12,9 @@ savApp.controller('HomeCtrl', ['$scope','CodeGeneration',function($scope,CodeGen
     };
 }]);
 
-
 // CreateVoteController
-savApp.controller('CreateVoteCtrl', ['$scope','ActionURL','$http', function($scope,ActionURL,$http,CodeGeneration) {
+savControllers.controller('CreateVoteCtrl', ['$scope','ActionURL','$http', function($scope,ActionURL,$http,CodeGeneration) {
     
-	
-	
 	var returnMsg = "";
 	// Post the request to back-end API
 	$http.post(ActionURL, { secret : secretCode }).
@@ -28,3 +27,17 @@ savApp.controller('CreateVoteCtrl', ['$scope','ActionURL','$http', function($sco
     
 }]);
 
+savControllers.controller('ConfigVoteCtrl', ['$scope', 
+	function($scope) {
+	
+	}]);
+
+savControllers.controller('CompleteVoteCtrl', ['$scope', 
+	function($scope) {
+	
+	}]);
+
+savControllers.controller('ShowVoteCtrl', ['$scope', 
+	function($scope) {
+	
+	}]);
