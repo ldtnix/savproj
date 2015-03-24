@@ -3,8 +3,7 @@ savApp.config(['$routeProvider','$stateProvider', '$urlRouterProvider',
 	  $stateProvider
 	    .state('step1', {
 	      url: '/step_1',
-	      templateUrl: 'partials/create-vote.html',
-			controller: 'CreateVoteCtrl'
+	      templateUrl: 'partials/create-vote.html'
 	    }) 
 	    .state('step2', {
 		      url: '/step_2',
