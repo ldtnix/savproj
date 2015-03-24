@@ -7,7 +7,8 @@
 */
 var savApp = angular.module('savApp', [
 	'ngRoute',
-	'savControllers','ui.router',
+	'savControllers',
+	'ui.router',
 	'savServices'
 ]);
 
