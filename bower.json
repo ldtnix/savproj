@@ -1,9 +1,9 @@
 {
-  "name": "angular-seed",
-  "description": "A starter project for AngularJS",
+  "name": "sav-project",
+  "description": "a secret project by Tuan&Tuyen",
   "version": "0.0.0",
-  "homepage": "https://github.com/angular/angular-seed",
-  "license": "MIT",
+  "homepage": "https://github.com/savproj/savproj",
+  "license": "Private",
   "private": true,
   "dependencies": {
     "angular": "1.2.x",
