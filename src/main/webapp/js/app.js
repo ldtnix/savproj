@@ -8,6 +8,5 @@
 var savApp = angular.module('savApp', [
 	'ngRoute',
 	'savControllers',
-	'CodeGeneration',
+	'savServices'
 ]);
-
