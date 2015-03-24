@@ -3,11 +3,14 @@
 var savControllers = angular.module('savControllers', []);
 
 // HomeController
-savControllers.controller('HomeCtrl', ['$scope','CodeGeneration',function($scope,CodeGeneration) {
+savControllers.controller('HomeCtrl', ['$scope','CodeGeneration','$state',function($scope,CodeGeneration,$state) {
 	// Create Secret Code
 	// This code will be used to access vote or generate Vote URL
-	var secretCode = CodeGeneration.generate();
-    
+	$scope.secretCode = CodeGeneration.generate();
+	$scope.$state = $state;
+    $scope.taoVote = function() {
+    	$state.transitionTo('step1');
+    };
 }]);
 
 // CreateVoteController
