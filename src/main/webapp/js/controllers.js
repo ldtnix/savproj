@@ -1,7 +1,7 @@
 'use strict';
 
 // HomeController
-SAVProj.controller('HomeCtrl', ['$scope','CodeGeneration',function($scope,CodeGeneration) {
+savApp.controller('HomeCtrl', ['$scope','CodeGeneration',function($scope,CodeGeneration) {
 	// Create Secret Code
 	// This code will be used to access vote or generate Vote URL
 	var secretCode = CodeGeneration.generate();
@@ -10,7 +10,7 @@ SAVProj.controller('HomeCtrl', ['$scope','CodeGeneration',function($scope,CodeGe
 
 
 // CreateVoteController
-SAVProj.controller('CreateVoteCtrl', ['$scope','ActionURL','$http', function($scope,ActionURL,$http,CodeGeneration) {
+savApp.controller('CreateVoteCtrl', ['$scope','ActionURL','$http', function($scope,ActionURL,$http,CodeGeneration) {
     
 	
 	
