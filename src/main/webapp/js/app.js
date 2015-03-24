@@ -5,5 +5,5 @@
 *
 * Main module of application.
 */
-var savApp = angular.module('savApp', ['SAVProject.Create']);
+var savApp = angular.module('savApp', ['ngRoute','CodeGeneration']);
 
