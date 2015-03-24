@@ -10,19 +10,11 @@ savApp.config(['$routeProvider',
 				controller: 'CreateVoteCtrl'
 			}).
 			when('/create/step2', {
-<<<<<<< HEAD
 				templateUrl: 'partials/config-vote.html',
 				controller: 'ConfigVoteCtrl'
 			}).
 			when('/create/step3', {
 				templateUrl: 'partials/complete-vote.html',
-=======
-				templateUrl: 'partials/config-vote.html',
-				controller: 'ConfigVoteCtrl'
-			}).
-			when('/create/step3', {
-				templateUrl: 'partials/complete-vote.html',
->>>>>>> 82096bf8e53a3a43cf498ffa851615de815cf28b
 				controller: 'CompleteVoteCtrl'
 			}).
 			when('/show/voteURL', {
