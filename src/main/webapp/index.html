@@ -2,28 +2,44 @@
 <html>
 <head>
 <meta charset="utf-8">
-
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="vendor/html5-boilerplate/css/normalize.css">
+<link rel="stylesheet" href="vendor/html5-boilerplate/css/main.css">
+<link rel="stylesheet"
+	href="vendor/bootstrap/dist/css/bootstrap-theme.min.css">
+<link rel="stylesheet"
+	href="vendor/bootstrap/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="app.css">
+<script src="vendor/jquery/dist/jquery.min.js"></script>
+<script src="vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="vendor/html5-boilerplate/js/vendor/modernizr-2.6.2.min.js"></script>
 <title>Vót đi nào</title>
 </head>
 <body>
 
 
-<!--  Navigation here -->
-<nav class="navbar navbar-default" role="navigation">
-   <div class="navbar-header">
-      <a class="navbar-brand" href="#">SAV Project</a>
-   </div>
-   <div>
-      <ul class="nav navbar-nav">
-         <li><a href="#/create">Tạo Vót</a></li>
-         <li><a href="#/result">Xem kết quả Vote</a></li>
-      </ul>
-   </div>
-</nav>
-<!--  End Navigation here -->
+	<!--  Navigation here -->
+	<nav class="navbar navbar-default" role="navigation">
+		<div class="navbar-header">
+			<a class="navbar-brand" href="#">SAV Project</a>
+		</div>
+		<div>
+			<ul class="nav navbar-nav">
+				<li><a href="#/create">Tạo Vót</a></li>
+				<li><a href="#/result">Xem kết quả Vote</a></li>
+			</ul>
+		</div>
+	</nav>
+	<!--  End Navigation here -->
 
-<div ng-view></div>
-
-
+	<div ng-view></div>
+	<div class="footer">Copyright(r) by T&T (KMS Technology)</div>
+	<script src="vendor/angular/angular.js"></script>
+	<script src="vendor/angular-route/angular-route.js"></script>
+	<script src="js/app.js"></script>
+	<script src="js/routes.js"></script>
+	<script src="js/controller.js"></script>
+	<script src="js/services"></script>
 </body>
 </html>
