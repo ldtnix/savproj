@@ -4,8 +4,10 @@
 savApp.controller('HomeCtrl', ['$scope','CodeGeneration',function($scope,CodeGeneration) {
 	// Create Secret Code
 	// This code will be used to access vote or generate Vote URL
-	var secretCode = CodeGeneration.generate();
-    
+	$scope.secretCode = CodeGeneration.generate();
+    $scope.taoVote = function() {
+    	$location.
+    };
 }]);
 
 
