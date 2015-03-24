@@ -64,7 +64,10 @@ savControllers.controller('CompleteVoteCtrl', ['$scope',
 	
 	}]);
 
-savControllers.controller('ShowVoteCtrl', ['$scope', 
-	function($scope) {
-	
+savControllers.controller('ShowVoteCtrl', ['$scope', '$http',
+	function($scope, $http) {
+		$http.get('/dump/vote.json').success(function(data){
+			$scope.vote = data;
+			console.log("data:" + data);
+		});
 	}]);

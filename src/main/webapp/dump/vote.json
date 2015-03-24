@@ -1,0 +1,18 @@
+{
+"title": "hom nay an gi",
+"options": [
+	{ "id":"1" , "text":"canh bun" }, 
+	{ "id":"2", "text":"kom" }, 
+	{ "id":"3", "text":"banh xeo"}
+], 
+"config": { 
+	"publicity": "true", 
+	"type": "multiple", 
+	"email": "" 
+},
+"voted": [
+  	{"name": "phantuan", "vote":[1,0,1]},
+	{"name": "tuyenlieu", "vote":[1,0,0]},
+  	{"name": "whoknow", "vote":[0,0,1]}
+]
+}

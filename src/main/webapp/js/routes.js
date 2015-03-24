@@ -15,7 +15,8 @@ savApp.config([ '$routeProvider', '$stateProvider', '$urlRouterProvider',
 				controller : 'CompleteVoteCtrl'
 			}).state('show', {
 				url : '/finish/:param',
-				templateUrl : 'partials/wizard/step_3.html'
+				templateUrl : 'partials/show-vote.html',
+				controller: 'ShowVoteCtrl'
 			});
 
 			// in home page or pagination
