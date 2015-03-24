@@ -10,3 +10,7 @@ var savApp = angular.module('savApp', [
 	'savControllers','ui.router',
 	'savServices'
 ]);
+
+// Create configuration constants for main Module
+
+savApp.constant('ActionURL','http://localhost:4567/getData');
