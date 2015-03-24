@@ -1,6 +1,6 @@
 'use strict';
 
-SAVProject.factory('CodeGeneration', function() {
+savApp.factory('CodeGeneration', function() {
 	return {
 		generate : function() {
 			var str = new Array(5).join().replace(/(.|$)/g, function() {
