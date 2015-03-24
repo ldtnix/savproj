@@ -13,6 +13,14 @@ savApp.config(['$routeProvider',
 				templateUrl: 'partials/config-vote.html'
 				controller: 'ConfigVoteCtrl'
 			}).
+			when('/create/:step3', {
+				templateUrl: 'partials/complete-vote.html'
+				controller: 'CompleteVoteCtrl'
+			}).
+			when('/show/:voteURL', {
+				templateUrl: 'partials/show-vote.html'
+				controller: 'ShowVoteCtrl'
+			}).
 			otherwise({
 				redirectTo: '/home'
 			});
