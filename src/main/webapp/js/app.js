@@ -5,5 +5,5 @@
 *
 * Main module of application.
 */
-var savApp = angular.module('savApp', []);
+var savApp = angular.module('savApp', ['SAVProject.Create']);
 

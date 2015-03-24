@@ -5,20 +5,20 @@ savApp.config(['$routeProvider',
 				templateUrl: 'partials/home.html',
 				controller: 'HomeCtrl'
 			}).
-			when('/create/:step1', {
+			when('/create/step1', {
 				templateUrl: 'partials/create-vote.html',
 				controller: 'CreateVoteCtrl'
 			}).
-			when('/create/:step2', {
-				templateUrl: 'partials/config-vote.html'
+			when('/create/step2', {
+				templateUrl: 'partials/config-vote.html',
 				controller: 'ConfigVoteCtrl'
 			}).
-			when('/create/:step3', {
-				templateUrl: 'partials/complete-vote.html'
+			when('/create/step3', {
+				templateUrl: 'partials/complete-vote.html',
 				controller: 'CompleteVoteCtrl'
 			}).
-			when('/show/:voteURL', {
-				templateUrl: 'partials/show-vote.html'
+			when('/show/voteURL', {
+				templateUrl: 'partials/show-vote.html',
 				controller: 'ShowVoteCtrl'
 			}).
 			otherwise({
