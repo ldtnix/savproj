@@ -10,10 +10,9 @@
 	"type": "multiple", 
 	"email": "" 
 },
-"voted": [
+"polls": [
   	{"name": "phantuan", "result":[{"opt":true}, {"opt":true}, {"opt":true}], "voted": true},
 	{"name": "tuyenlieu", "result":[{"opt":true}, {"opt":false}, {"opt":false}], "voted": true},
-  	{"name": "whoknow", "result":[{"opt":false}, {"opt":true}, {"opt":false}], "voted": true},
-  	{"name": "", "result":[{"opt":false}, {"opt":false}, {"opt":false}], "voted": false}	
+  	{"name": "whoknow", "result":[{"opt":false}, {"opt":true}, {"opt":false}], "voted": true}
 ]
 }

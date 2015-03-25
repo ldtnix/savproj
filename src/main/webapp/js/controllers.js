@@ -2,26 +2,7 @@
 
 var savControllers = angular.module('savControllers', [ 'savServices' ]);
 
-//Directive Attribute to display array elements on seperated lines
-savControllers.directive('splitArray', function() {
-    return {
-        restrict: 'A',
-        require: 'ngModel',
-        link: function(scope, element, attr, ngModel) {
 
-            function fromArray(text) {
-                return text.split(", ");
-            }
-
-            function toLine(array) {                        
-                return array.join("\n");
-            }
-
-            ngModel.$parsers.push(fromArray);
-            ngModel.$formatters.push(toLine);
-        }
-    };
-});
 // HomeController
 savControllers.controller('HomeCtrl', [ '$scope', '$rootScope',
 		'CodeGeneration', '$state',
@@ -108,10 +89,74 @@ savControllers.controller('CompleteVoteCtrl', [ '$scope','$rootScope', '$locatio
 	
 } ]);
 
-savControllers.controller('ShowVoteCtrl', [ '$scope', '$http',
-		function($scope, $http) {
-			$http.get('/dump/vote.json').success(function(data) {
-				$scope.vote = data;
-				console.log("data:" + data);
-			});
-		} ]);
+
+savControllers.controller('ShowVoteCtrl', ['$scope', '$http',
+	function($scope, $http) {
+		$scope.voteDone = false;
+
+		// TODO: load from back-end
+		$http.get('/dump/vote.json').success(function(data){
+			$scope.vote = data;
+			var polls = $scope.vote.polls;
+
+			initVoteSum(polls);
+			addNewVote2Polls();
+		});
+
+		function addNewVote2Polls() {
+			var opts = [];
+			for (var i = 0; i < $scope.vote.options.length; i++) {
+				opts.push({"opt":false});
+			};
+
+			$scope.vote.polls.push({"name": "", "result":opts, "voted": false});
+		}
+
+		function initVoteSum(polls) {
+			$scope.voteSum = {};
+			for (var i = 0; i < polls.length; i++) {
+				for (var y = 0; y < polls[i].result.length; y++) {
+					if (!$scope.voteSum.hasOwnProperty("opt_" + y)) {
+						$scope.voteSum["opt_" + y] = 0;
+					}
+
+					$scope.voteSum["opt_" + y] = (polls[i].result[y].opt === true) ? ($scope.voteSum["opt_" + y] + 1) : $scope.voteSum["opt_" + y];
+				}
+			};
+		}
+
+		$scope.countVote = function(idx, isVote) {
+			$scope.voteSum["opt_" + idx] = (isVote === true) ? ($scope.voteSum["opt_" + idx] + 1) : $scope.voteSum["opt_" + idx] - 1;
+		}		
+
+		$scope.submitVote = function() {
+			for (var i = 0; i < $scope.vote.polls.length; i++) {
+				$scope.vote.polls[i].voted = true
+			};
+
+			// TODO: Save into DB
+
+			$scope.voteDone = true;
+		}
+	}]);
+
+//Directive Attribute to display array elements on seperated lines
+savControllers.directive('splitArray', function() {
+    return {
+        restrict: 'A',
+        require: 'ngModel',
+        link: function(scope, element, attr, ngModel) {
+
+            function fromArray(text) {
+                return text.split(", ");
+            }
+
+            function toLine(array) {                        
+                return array.join("\n");
+            }
+
+            ngModel.$parsers.push(fromArray);
+            ngModel.$formatters.push(toLine);
+        }
+    };
+});
