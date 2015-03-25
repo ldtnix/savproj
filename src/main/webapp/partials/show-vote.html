@@ -8,7 +8,7 @@
 			<th ng-repeat="head in vote.options">{{head.text}}</th>
 		</tr>
 
-		<tr ng-repeat="row in vote.voted">
+		<tr ng-repeat="row in vote.polls">
 			<td>
 				<input ng-hide="row.voted" ng-model="row.name">
 				<p ng-show="row.voted">{{row.name}}</p>
@@ -19,5 +19,9 @@
 		</tr>
 	</table>
 
-	<p>{{vote.voted[3]}}</p>
+	<p>{{vote.polls[3]}}</p>
+
+	<button type="button" class="btn btn-danger" ng-click="submitVote()">
+		<span>Vót</span>
+	</button>
 </div>

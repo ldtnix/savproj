@@ -66,8 +66,24 @@ savControllers.controller('CompleteVoteCtrl', ['$scope',
 
 savControllers.controller('ShowVoteCtrl', ['$scope', '$http',
 	function($scope, $http) {
+
+		// TODO: load from back-end
 		$http.get('/dump/vote.json').success(function(data){
 			$scope.vote = data;
-			console.log("data:" + data);
+
+			var opts = [];
+			for (var i = 0; i < $scope.vote.options.length; i++) {
+				opts.push({"opt":false});
+			};
+
+			$scope.vote.polls.push({"name": "", "result":opts, "voted": false});
 		});
+
+		$scope.submitVote = function() {
+			for (var i = 0; i < $scope.vote.polls.length; i++) {
+				$scope.vote.polls[i].voted = true
+			};
+
+			// TODO: Save into DB
+		}
 	}]);
