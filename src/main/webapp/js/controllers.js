@@ -66,6 +66,7 @@ savControllers.controller('CompleteVoteCtrl', ['$scope',
 
 savControllers.controller('ShowVoteCtrl', ['$scope', '$http',
 	function($scope, $http) {
+		$scope.voteDone = false;
 
 		// TODO: load from back-end
 		$http.get('/dump/vote.json').success(function(data){
@@ -85,5 +86,7 @@ savControllers.controller('ShowVoteCtrl', ['$scope', '$http',
 			};
 
 			// TODO: Save into DB
+
+			$scope.voteDone = true;
 		}
 	}]);
