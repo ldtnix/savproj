@@ -1,34 +1,58 @@
 'use strict';
 
-var savControllers = angular.module('savControllers', []);
+var savControllers = angular.module('savControllers', ['savServices']);
 
 // HomeController
-savControllers.controller('HomeCtrl', ['$scope', 'CodeGeneration', '$state',
-	function($scope,CodeGeneration,$state) {
-		// Create Secret Code
-		// This code will be used to access vote or generate Vote URL
-		$scope.secretCode = CodeGeneration.generate();
-		$scope.$state = $state;
-	    $scope.taoVote = function() {
-	    	$scope.$state.transitionTo('step1');
-	    };
-	}]);
+savControllers.controller('HomeCtrl', ['$scope','$rootScope','CodeGeneration','$state',function($scope,$rootScope,CodeGeneration,$state) {
+	// Create Secret Code
+	// This code will be used to access vote or generate Vote URL
+	$rootScope.secretCode = CodeGeneration();
+	 console.log($rootScope.secretCode);
+	 console.log("home");
+	$scope.$state = $state;
+    $scope.taoVote = function() {
+    	$state.transitionTo('step1');
+    };
+}]);
 
 // CreateVoteController
-savControllers.controller('CreateVoteCtrl', ['$scope', 'ActionURL', '$http', 
-	function($scope,ActionURL,$http,CodeGeneration) {
-    
-		var returnMsg = "";
-		// Post the request to back-end API
-		$http.post(ActionURL, { secret : secretCode }).
-		  success(function(data) {
-			  returnMsg = "Vót được tạo thành công.";
-		  }).
-		  error(function(data, status, headers, config) {
-			  returnMsg = "Đã có lỗi khi tạo Vót.";
-		  });
-    
-	}]);
+savControllers.controller('CreateVoteCtrl', ['$scope','$rootScope','ActionURL','$http','$state', function($scope,$rootScope,ActionURL,$http,$state) {
+	var returnMsg = "";
+	$rootScope.vote = {};
+	$scope.options = [];
+	$scope.form = {};
+	$scope.title = "";
+	var number = 0;
+	console.log("create");
+	// Post the request to back-end API
+	/*$http.post(ActionURL, { secret : $rootScope.secretCode }).
+	  success(function(data) {
+		  returnMsg = "Vót được tạo thành công.";
+	  }).
+	  error(function(data, status, headers, config) {
+		  returnMsg = "Đã có lỗi khi tạo Vót.";
+	  });*/
+	
+	$scope.addMoreOption = function() {
+		number += 1;
+		$scope.options.push(
+				{'id' : number ,
+				 'value' : ''}
+		);
+		console.log(number);
+	}
+	
+	$scope.goNext = function() {
+		$rootScope.vote.options = $scope.options;
+		$rootScope.vote.title = $scope.title;
+		console.log($scope.options);
+		$state.transitionTo('step2');
+	}
+	
+	
+	
+	
+}]);
 
 savControllers.controller('ConfigVoteCtrl', ['$scope', 
 	function($scope) {
@@ -40,7 +64,10 @@ savControllers.controller('CompleteVoteCtrl', ['$scope',
 	
 	}]);
 
-savControllers.controller('ShowVoteCtrl', ['$scope', 
-	function($scope) {
-	
+savControllers.controller('ShowVoteCtrl', ['$scope', '$http',
+	function($scope, $http) {
+		$http.get('/dump/vote.json').success(function(data){
+			$scope.vote = data;
+			console.log("data:" + data);
+		});
 	}]);
