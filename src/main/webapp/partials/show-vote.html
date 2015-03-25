@@ -2,4 +2,22 @@
 	
 	<h1>{{vote.title}}</h1>
 
+	<table cellpadding="20">
+		<tr>
+			<th>&nbsp;</th>
+			<th ng-repeat="head in vote.options">{{head.text}}</th>
+		</tr>
+
+		<tr ng-repeat="row in vote.voted">
+			<td>
+				<input ng-hide="row.voted" ng-model="row.name">
+				<p ng-show="row.voted">{{row.name}}</p>
+			</td>
+			<td ng-repeat="optRes in row.result track by $index">
+				<input type="checkbox" ng-disabled="row.voted" ng-model="optRes.opt">
+			</td>
+		</tr>
+	</table>
+
+	<p>{{vote.voted[3]}}</p>
 </div>

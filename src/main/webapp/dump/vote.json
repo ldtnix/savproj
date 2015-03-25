@@ -11,8 +11,9 @@
 	"email": "" 
 },
 "voted": [
-  	{"name": "phantuan", "vote":[1,0,1]},
-	{"name": "tuyenlieu", "vote":[1,0,0]},
-  	{"name": "whoknow", "vote":[0,0,1]}
+  	{"name": "phantuan", "result":[{"opt":true}, {"opt":true}, {"opt":true}], "voted": true},
+	{"name": "tuyenlieu", "result":[{"opt":true}, {"opt":false}, {"opt":false}], "voted": true},
+  	{"name": "whoknow", "result":[{"opt":false}, {"opt":true}, {"opt":false}], "voted": true},
+  	{"name": "", "result":[{"opt":false}, {"opt":false}, {"opt":false}], "voted": false}	
 ]
 }
