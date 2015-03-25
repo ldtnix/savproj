@@ -3,8 +3,9 @@
 		<h1>Hãy tạo vót cho bạn!!</h1>
 	</div>
 	<div>
-		<form class="form-horizontal" role="form" ng-model="form">
-			<table class="table table-striped" style="width: 40%">
+		<form class="form-horizontal" role="form" ng-model="myForm"
+			name="myForm" no-validate>
+			<table class="table table-striped" style="width: 50%">
 				<caption>
 					<span class="label label-info">Config Vót của bạn</span>
 				</caption>
@@ -13,50 +14,121 @@
 						<td><label for="publicity">Vote is </label></td>
 
 						<td><label class="checkbox-inline"> <input
-								type="radio" name="publicity" id="publicity" value="private"
-								checked> <span class="label label-primary">Private</span>
+								type="radio" name="publicity" id="publicity" value="private" ng-model="publicity">
+								<span class="label label-primary">Private</span>
 						</label></td>
 						<td><label class="checkbox-inline"> <input
-								type="radio" name="publicity" id="publicity" value="public"
-								checked> <span class="label label-primary">Public</span>
+								type="radio" name="publicity" id="publicity" value="public" ng-model="publicity">
+								<span class="label label-primary">Public</span>
 						</label></td>
 					</tr>
 					<tr>
 						<td><label for="type">Option Type </label></td>
 						<td><label class="checkbox-inline"> <input
-								type="radio" name="type" id="type" value="multiple" checked>
+								type="radio" name="type" id="type" value="multiple" ng-model="type">
 								<span class="label label-primary">Multiple Choice</span>
 						</label></td>
 						<td><label class="checkbox-inline"> <input
-								type="radio" name="type" id="type" value="single" checked><span
-								class="label label-primary"> Single Choice</span>
+								type="radio" name="type" id="type" value="single" ng-model="type"><span
+								class="label label-primary">Single Choice</span>
 						</label></td>
 					</tr>
 					<tr>
 						<td><label class="checkbox-inline"> <input
-								type="checkbox" name="closetime" id="closetime" value=""><span
-								class="label label-primary"> Close Time</span>
+								type="checkbox" name="closeTime" id="closetime"
+								ng-model="closeTick"><span class="label label-primary">
+									Close Time</span>
 						</label></td>
 
-						<td><label class="checkbox-inline"> <input type="text"  class="form-control" style="width:100%"/></label></td>
+						<td><label class="checkbox-inline"> <input
+								type="number" class="form-control" name="closeDuration"
+								style="width: 90%" placeholder="" ng-model="closeDuration"
+								required="myForm.closeTick" /> <span class="label label-danger"
+								ng-show="myForm.closeDuration.$error.required && closeTick">
+									Required!</span>
+								<p>
+									<span class="label label-danger"
+										ng-show="myForm.closeDuration.$error.number && closeTick">
+										Not a Number</span>
+								</p>
+						</label></td>
+
+
+
 						<td><label class="checkbox-inline"> <select
-								id="closeDuration" class="form-control">
-									<option>Phút</option>
-									<option>Giờ</option>
-									<option>Ngày</option>
+								id="closeDuration" class="form-control" ng-model="period">
+									<option value="m">Phút</option>
+									<option value="h">Giờ</option>
+									<option value="d">Ngày</option>
 							</select>
 						</label></td>
 					</tr>
 					<tr>
+						<td colspan=2><span class="label label-primary"> Send
+								mail to:</span></td>
+						<td><button type="button" class="btn btn-info"
+								data-toggle="modal" data-target="#emailList">Add Emails</button></td>
 						<td></td>
+					</tr>
+					<tr>
+						<td colspan=3>
+							<div class="form-group">
+								<textarea class="form-control" rows="3" ng-model="emails"
+									ng-trim="true" split-array  readonly="readonly"></textarea>
+
+							</div>
+						</td>
 						<td></td>
-						<td><button type="button" class="btn btn-default"
-								ng-click="goNext()" style="float: right">Tiếp</button></td>
 					</tr>
 				</tbody>
 			</table>
+			<div class="form-group" style="float: right">
+				<div class="col-sm-offset-2 col-sm-10">
+					<button type="button" class="btn btn-default" ng-click="goNext()"
+						ng-disabled="!myForm.$valid">Tiếp</button>
+				</div>
+			</div>
 
+			<!-- Modal -->
+			<div class="modal fade" id="emailList" tabindex="-1" role="dialog"
+				aria-labelledby="" emailListLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h4 class="modal-title" id="myModalLabel">Add emails to
+								receive vót invitation</h4>
+						</div>
+						<div class="modal-body">
+							<div class="input-group input-group-lg">
+								<span class="input-group-addon">@</span> <input type="email"
+									class="form-control" placeholder="" name="emailTxt"
+									ng-model="emailTxt" required>
+							</div>
+							<div>
+								<span class="label label-danger"
+									ng-show="myForm.emailTxt.$error.required"> Required!</span>
+								<p>
+									<span class="label label-danger"
+										ng-show="myForm.emailTxt.$error.email"> Not an email</span>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default"
+								data-dismiss="modal">Close</button>
+							<button type="button" class="btn btn-primary"
+								ng-click="addEmail(emailTxt)" ng-disabled="!myForm.$valid">Add</button>
+						</div>
+					</div>
+					<!-- /.modal-content -->
+				</div>
+				<!-- /.modal -->
+
+			</div>
 		</form>
 	</div>
+
+
+
+
 
 </div>
