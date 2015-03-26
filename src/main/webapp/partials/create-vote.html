@@ -3,12 +3,12 @@
 		<h1>Hãy tạo vót cho bạn!!</h1>
 	</div>
 	<div>
-		<form class="form-horizontal" role="form" ng-model="form">
+		<form class="form-horizontal" role="form" ng-model="form" novalidate name="form">
 			<div class="form-group">
 				<label for="Title" class="col-sm-2 control-label">Title</label>
 				<div class="col-sm-10" style="width:40%">
 					<input type="text" class="form-control" id="title"
-						placeholder="Hãy nhập câu hỏi khảo sát của bạn" ng-model="title"> 
+						placeholder="Hãy nhập câu hỏi khảo sát của bạn" ng-model="title" required> 
 				</div>
 			</div>
 			<div class="form-group">
@@ -20,12 +20,12 @@
 				<label for="lastname" class="col-sm-2 control-label">Lựa chọn số {{choice.id}}</label>
 				<div class="col-sm-10" style="width:40%">
 					<input type="text" class="form-control" id="option-{{choice.id}}"
-						placeholder="Nhập lựa chọn" ng-model="choice.value">
+						placeholder="Nhập lựa chọn" ng-model="choice.value" required>
 				</div>
 			</div>
 			<div class="form-group" style="float:right">
 				<div class="col-sm-offset-2 col-sm-10">
-					<button type="button" class="btn btn-default" ng-click="goNext()">Tiếp</button>
+					<button type="button" class="btn btn-default" ng-click="goNext()" ng-disabled="!form.$valid">Tiếp</button>
 				</div>
 			</div>
 		</form>
