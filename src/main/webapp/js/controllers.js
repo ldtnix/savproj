@@ -59,12 +59,40 @@ savControllers.controller('ConfigVoteCtrl', [ '$scope','$rootScope','$state', fu
 	$scope.emails = [];
 	$scope.period = $scope.type = $scope.publicity = "";
 	$rootScope.vote.config = {};
+
+	$scope.$watch(function(scope){return scope.emails}, function(newValue, oldValue) {
+		console.log("go to watch");
+		if (newValue !== oldValue) {
+			console.log("waching emails");
+
+			var ctrl = angular.element(document.querySelector("#emails_ta")).controller("ngModel");
+
+			// Invoke formatter
+			var formatters = ctrl.$formatters,
+		          idx = formatters.length;
+		    
+		    while(idx--) {
+		        newValue = formatters[idx](newValue);
+		    }
+
+		    // Update viewValue and invoke render
+		    if (ctrl.$viewValue !== newValue) {
+		    	ctrl.$viewValue = newValue;
+		        ctrl.$render();
+		    }
+		}
+	}, true);
+
 	$scope.addEmail = function(email) {
+		/*
 		var emailList = $scope.emails;
 		emailList.push(email);
 		$scope.emails = angular.copy(emailList);
-		
+		*/
+
+		$scope.emails.push(email);
 	}
+
 	$scope.goNext = function() {
 		$rootScope.vote.config.publicity = $scope.publicity;
 		$rootScope.vote.config.type = $scope.type;
@@ -147,16 +175,16 @@ savControllers.directive('splitArray', function() {
         require: 'ngModel',
         link: function(scope, element, attr, ngModel) {
 
-            function fromArray(text) {
-                return text.split(", ");
+            function myParser(text) {
+                return text.join().split(", ");
             }
 
-            function toLine(array) {                        
+            function myFormat(array) {                        
                 return array.join("\n");
             }
 
-            ngModel.$parsers.push(fromArray);
-            ngModel.$formatters.push(toLine);
+            ngModel.$parsers.push(myParser);   
+            ngModel.$formatters.push(myFormat);
         }
     };
 });
