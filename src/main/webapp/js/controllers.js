@@ -1,41 +1,50 @@
 'use strict';
 
-var savControllers = angular.module('savControllers', [ 'savServices' ]);
-
+var savControllers = angular.module('savControllers', [ 'savServices',
+		'ngCookies' ]);
 
 // HomeController
 savControllers.controller('HomeCtrl', [ '$scope', '$rootScope',
-		'CodeGeneration', '$state',
-		function($scope, $rootScope, CodeGeneration, $state) {
+		'CodeGeneration', '$state', 'CookieTackle',
+		function($scope, $rootScope, CodeGeneration, $state, CookieTackle) {
 			// Create Secret Code
 			// This code will be used to access vote or generate Vote URL
 			$rootScope.secretCode = CodeGeneration();
-			$scope.$state = $state;
+
 			$scope.taoVote = function() {
+				// Put this secretCode into cookie
+				CookieTackle.store('secretCode', $rootScope.secretCode);
 				$state.transitionTo('step1');
 			};
-
-
-			$scope.carName = "";
 		} ]);
 
 // CreateVoteController
-savControllers.controller('CreateVoteCtrl', [ '$scope', '$rootScope',
-		'ActionURL', '$http', '$state',
-		function($scope, $rootScope, ActionURL, $http, $state) {
-			var returnMsg = "";
+savControllers.controller('CreateVoteCtrl', [
+		'$scope',
+		'$rootScope',
+		'ActionURL',
+		'$http',
+		'$state',
+		'CookieTackle',
+		function($scope, $rootScope, ActionURL, $http, $state, CookieTackle) {
+
 			$rootScope.vote = {};
 			$scope.options = [];
 			$scope.form = {};
 			$scope.title = "";
+			if (CookieTackle.isExist('secretCode')) {
+				// There is data input
+				$rootScope.secretCode = CookieTackle.retriever('secretCode');
+				if (CookieTackle.isExist($rootScope.secretCode)) {
+					$rootScope.vote = CookieTackle
+							.retriever($rootScope.secretCode);
+					$scope.options = $rootScope.vote.options;
+					$scope.title = $rootScope.vote.title;
+				}
+			}
+
+			var returnMsg = "";
 			var number = 0;
-			// Post the request to back-end API
-			/*
-			 * $http.post(ActionURL, { secret : $rootScope.secretCode }).
-			 * success(function(data) { returnMsg = "Vót được tạo thành công.";
-			 * }). error(function(data, status, headers, config) { returnMsg =
-			 * "Đã có lỗi khi tạo Vót."; });
-			 */
 
 			$scope.addMoreOption = function() {
 				number += 1;
@@ -49,6 +58,8 @@ savControllers.controller('CreateVoteCtrl', [ '$scope', '$rootScope',
 				$rootScope.vote.options = $scope.options;
 				$rootScope.vote.title = $scope.title;
 				console.log($rootScope.vote);
+				// Put this secretCode into cookie
+				CookieTackle.store($rootScope.secretCode, $rootScope.vote);
 				$state.transitionTo('step2');
 			}
 
@@ -105,89 +116,174 @@ savControllers.controller('ConfigVoteCtrl', [ '$scope','$rootScope','$state', fu
 		console.log($rootScope.vote);
 		$state.transitionTo('step3');
 	}
+savControllers
+		.controller(
+				'ConfigVoteCtrl',
+				[
+						'$scope',
+						'$rootScope',
+						'$state',
+						'CookieTackle',
+						function($scope, $rootScope, $state, CookieTackle) {
+							$scope.myForm = {};
+							$scope.closeDuration = 0;
+							$scope.closeTick = false;
+							$scope.emails = [];
+							$scope.period = $scope.type = $scope.publicity = "";
+							if (CookieTackle.isExist('secretCode')) {
+								// There is data input
+								$rootScope.secretCode = CookieTackle
+										.retriever('secretCode');
+								if (CookieTackle.isExist($rootScope.secretCode)) {
+									$rootScope.vote = CookieTackle
+											.retriever($rootScope.secretCode);
+									if ($rootScope.vote.config !== undefined) {
+										$scope.publicity = $rootScope.vote.config.publicity;
+										$scope.type = $rootScope.vote.config.type;
+										$scope.closeDuration = $rootScope.vote.config.closeDuration;
+										$scope.period = $rootScope.vote.config.period;
+										$scope.emails = $rootScope.vote.config.emails;
+									}
+								}
+							}
+							$scope.addEmail = function(email) {
 
+								var emailList = $scope.emails;
+								emailList.push(email);
+								$scope.emails = angular.copy(emailList);
 
+							};
 
-} ]);
+							$scope.goNext = function() {
+								$rootScope.vote.config = {};
+								$rootScope.vote.config.publicity = $scope.publicity;
+								$rootScope.vote.config.type = $scope.type;
+								$rootScope.vote.config.closeDuration = $scope.closeDuration;
+								$rootScope.vote.config.period = $scope.period;
+								$rootScope.vote.config.emails = $scope.emails;
+								console.log($rootScope.vote);
+								// Put this secretCode into cookie
+								CookieTackle.store($rootScope.secretCode,
+										$rootScope.vote);
+								$state.transitionTo('step3');
+							}
 
-savControllers.controller('CompleteVoteCtrl', [ '$scope','$rootScope', '$location', function($scope,$rootScope,$location) {
-				$scope.secretCode = $rootScope.secretCode;
-				$scope.destLink = "http://" + $location.host() + "/show/" + $scope.secretCode;
-				$scope.done = function() {
-					//call API
+						} ]);
+
+savControllers.controller('CompleteVoteCtrl', [
+		'$scope',
+		'$rootScope',
+		'$location',
+		'CookieTackle',
+		function($scope, $rootScope, $location, CookieTackle) {
+			$scope.secretCode = $rootScope.secretCode;
+
+			if (CookieTackle.isExist('secretCode')) {
+				// There is data input
+				$rootScope.secretCode = CookieTackle.retriever('secretCode');
+				if (CookieTackle.isExist($rootScope.secretCode)) {
+					$rootScope.vote = CookieTackle
+							.retriever($rootScope.secretCode);
 				}
-	
-	
-} ]);
+			}
 
+			$scope.destLink = "http://" + $location.host() + "/show/"
+					+ $scope.secretCode;
+			$scope.done = function() {
+				// call API
+				// Put this secretCode into cookie
+				CookieTackle.store($rootScope.secretCode, $rootScope.vote);
+			}
 
-savControllers.controller('ShowVoteCtrl', ['$scope', '$http',
-	function($scope, $http) {
-		$scope.voteDone = false;
+		} ]);
 
-		// TODO: load from back-end
-		$http.get('/dump/vote.json').success(function(data){
-			$scope.vote = data;
-			var polls = $scope.vote.polls;
+savControllers
+		.controller(
+				'ShowVoteCtrl',
+				[
+						'$scope',
+						'$http',
+						function($scope, $http) {
+							$scope.voteDone = false;
 
-			initVoteSum(polls);
-			addNewVote2Polls();
-		});
+							// TODO: load from back-end
+							$http.get('/dump/vote.json').success(
+									function(data) {
+										$scope.vote = data;
+										var polls = $scope.vote.polls;
 
-		function addNewVote2Polls() {
-			var opts = [];
-			for (var i = 0; i < $scope.vote.options.length; i++) {
-				opts.push({"opt":false});
-			};
+										initVoteSum(polls);
+										addNewVote2Polls();
+									});
 
-			$scope.vote.polls.push({"name": "", "result":opts, "voted": false});
-		}
+							function addNewVote2Polls() {
+								var opts = [];
+								for (var i = 0; i < $scope.vote.options.length; i++) {
+									opts.push({
+										"opt" : false
+									});
+								}
+								;
 
-		function initVoteSum(polls) {
-			$scope.voteSum = {};
-			for (var i = 0; i < polls.length; i++) {
-				for (var y = 0; y < polls[i].result.length; y++) {
-					if (!$scope.voteSum.hasOwnProperty("opt_" + y)) {
-						$scope.voteSum["opt_" + y] = 0;
-					}
+								$scope.vote.polls.push({
+									"name" : "",
+									"result" : opts,
+									"voted" : false
+								});
+							}
 
-					$scope.voteSum["opt_" + y] = (polls[i].result[y].opt === true) ? ($scope.voteSum["opt_" + y] + 1) : $scope.voteSum["opt_" + y];
-				}
-			};
-		}
+							function initVoteSum(polls) {
+								$scope.voteSum = {};
+								for (var i = 0; i < polls.length; i++) {
+									for (var y = 0; y < polls[i].result.length; y++) {
+										if (!$scope.voteSum
+												.hasOwnProperty("opt_" + y)) {
+											$scope.voteSum["opt_" + y] = 0;
+										}
 
-		$scope.countVote = function(idx, isVote) {
-			$scope.voteSum["opt_" + idx] = (isVote === true) ? ($scope.voteSum["opt_" + idx] + 1) : $scope.voteSum["opt_" + idx] - 1;
-		}		
+										$scope.voteSum["opt_" + y] = (polls[i].result[y].opt === true) ? ($scope.voteSum["opt_"
+												+ y] + 1)
+												: $scope.voteSum["opt_" + y];
+									}
+								}
+								;
+							}
 
-		$scope.submitVote = function() {
-			for (var i = 0; i < $scope.vote.polls.length; i++) {
-				$scope.vote.polls[i].voted = true
-			};
+							$scope.countVote = function(idx, isVote) {
+								$scope.voteSum["opt_" + idx] = (isVote === true) ? ($scope.voteSum["opt_"
+										+ idx] + 1)
+										: $scope.voteSum["opt_" + idx] - 1;
+							}
 
-			// TODO: Save into DB
+							$scope.submitVote = function() {
+								for (var i = 0; i < $scope.vote.polls.length; i++) {
+									$scope.vote.polls[i].voted = true
+								}
+								;
 
-			$scope.voteDone = true;
-		}
-	}]);
+								// TODO: Save into DB
 
-//Directive Attribute to display array elements on seperated lines
+								$scope.voteDone = true;
+							}
+						} ]);
+
+// Directive Attribute to display array elements on seperated lines
 savControllers.directive('splitArray', function() {
-    return {
-        restrict: 'A',
-        require: 'ngModel',
-        link: function(scope, element, attr, ngModel) {
+	return {
+		restrict : 'A',
+		require : 'ngModel',
+		link : function(scope, element, attr, ngModel) {
 
-            function myParser(text) {
-                return text.join().split(", ");
-            }
+			function fromArray(text) {
+				return text.split(", ");
+			}
 
-            function myFormat(array) {                        
-                return array.join("\n");
-            }
+			function toLine(array) {
+				return array.join("\n");
+			}
 
-            ngModel.$parsers.push(myParser);   
-            ngModel.$formatters.push(myFormat);
-        }
-    };
+			ngModel.$parsers.push(fromArray);
+			ngModel.$formatters.push(toLine);
+		}
+	};
 });
