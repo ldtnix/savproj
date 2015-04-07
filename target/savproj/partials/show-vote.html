@@ -1,0 +1,34 @@
+<div id="show-vote">
+	
+	<h1>{{vote.title}}</h1>
+
+	<table cellpadding="20">
+		<tr>
+			<th>&nbsp;</th>
+			<th ng-repeat="head in vote.options">{{head.text}}</th>
+		</tr>
+
+		<tr ng-repeat="row in vote.polls">
+			<td>
+				<input ng-hide="row.voted" ng-model="row.name">
+				<p ng-show="row.voted">{{row.name}}</p>
+			</td>
+			<td ng-repeat="optRes in row.result track by $index">
+				<input type="checkbox" ng-disabled="row.voted" ng-model="optRes.opt" ng-change="countVote($index, optRes.opt)">
+			</td>
+		</tr>
+
+		<tr>
+			<td>&nbsp;</td>
+			<td ng-repeat="(key, value) in voteSum">
+				<span>{{value}}</span>
+			</td>
+		</tr>
+	</table>
+
+	<p>{{vote.polls[3]}}</p>
+
+	<button type="button" class="btn btn-danger" ng-click="submitVote()" ng-hide="voteDone">
+		<span>Vót</span>
+	</button>
+</div>

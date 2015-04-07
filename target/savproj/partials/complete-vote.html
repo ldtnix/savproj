@@ -1,0 +1,27 @@
+<div class="container-fluid well" style="width:60%">
+	<div>
+		<h1>Vót đa tạo thành công!!</h1>
+	</div>
+	<div>
+		<form class="form-horizontal" role="form" ng-model="form">
+			<div class="form-group">
+				<label for="Title" class="col-sm-2 control-label">mã Bảo Vệ</label>
+				<div class="col-sm-10" style="width:40%">
+					<input type="text" class="form-control" id="firstname" ng-model="secretCode" readonly="readonly"> 
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="lastname" class="col-sm-2 control-label">Link</label>
+				<div class="col-sm-10" style="width:40%">
+					<label>{{destLink}}</label>
+				</div>
+			</div>
+			<div class="form-group" style="float:right">
+				<div class="col-sm-offset-2 col-sm-10">
+					<button type="button" class="btn btn-default" ng-click="done()">Tiếp</button>
+				</div>
+			</div>
+		</form>
+	</div>
+
+</div>

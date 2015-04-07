@@ -1,0 +1,18 @@
+{
+"title": "hom nay an gi",
+"options": [
+	{ "id":"1" , "text":"canh bun" }, 
+	{ "id":"2", "text":"kom" }, 
+	{ "id":"3", "text":"banh xeo"}
+], 
+"config": { 
+	"publicity": "true", 
+	"type": "multiple", 
+	"email": "" 
+},
+"polls": [
+  	{"name": "phantuan", "result":[{"opt":true}, {"opt":true}, {"opt":true}], "voted": true},
+	{"name": "tuyenlieu", "result":[{"opt":true}, {"opt":false}, {"opt":false}], "voted": true},
+  	{"name": "whoknow", "result":[{"opt":false}, {"opt":true}, {"opt":false}], "voted": true}
+]
+}
