@@ -31,9 +31,8 @@ public class dispatcher {
 				@Override
 	            public Object handle(Request request, Response response) {
 	            	String secretCode = request.queryParams(":secretCode");
-	            	JSONArray jSonArray = new Json/...;
-	            	//
-	            	jSonArray = Util.retrieve(secretCode);
+	            	JSONArray jSonArray = new JSONArray();
+//	            	jSonArray = Util.retrieve(secretCode);
 	            	return jSonArray.toJSONString();
 	            }
 
@@ -44,12 +43,13 @@ public class dispatcher {
 	            @Override
 	            public Object handle(Request request, Response response) {
 	            	String secretCode = request.queryParams(":secretCode");
-	            	JSonArray data = (JSonArray) request.attribute(secretCode);
-	            	if(Util.save(data)) {
-	            		 return "unsuccessfull";
-	            	} else {
-	            		return "failed";
-	            	}
+	            	JSONArray data = (JSONArray) request.attribute(secretCode);
+//	            	if(Util.save(data)) {
+//	            		 return "unsuccessfull";
+//	            	} else {
+//	            		return "failed";
+//	            	}
+	            	return null;
 	            }
 	        });
 	    }
