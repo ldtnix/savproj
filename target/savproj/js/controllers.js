@@ -171,23 +171,3 @@ savControllers.controller('ShowVoteCtrl', ['$scope', '$http',
 		}
 	}]);
 
-//Directive Attribute to display array elements on seperated lines
-savControllers.directive('splitArray', function() {
-    return {
-        restrict: 'A',
-        require: 'ngModel',
-        link: function(scope, element, attr, ngModel) {
-
-            function myParser(text) {
-                return text.join().split(", ");
-            }
-
-            function myFormat(array) {                        
-                return array.join("\n");
-            }
-
-            ngModel.$parsers.push(myParser);   
-            ngModel.$formatters.push(myFormat);
-        }
-    };
-});

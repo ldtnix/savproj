@@ -65,57 +65,6 @@ savControllers.controller('CreateVoteCtrl', [
 
 		} ]);
 
-savControllers.controller('ConfigVoteCtrl', [ '$scope','$rootScope','$state', function($scope,$rootScope,$state) {
-	$scope.myForm = {};
-	$scope.closeDuration = 0;
-	$scope.closeTick = false;
-	console.log($rootScope.vote);
-	$scope.emails = [];
-	$scope.period = $scope.type = $scope.publicity = "";
-	$rootScope.vote.config = {};
-
-	$scope.$watch(function(scope){return scope.emails}, function(newValue, oldValue) {
-		console.log("go to watch");
-		if (newValue !== oldValue) {
-			console.log("waching emails");
-
-			var ctrl = angular.element(document.querySelector("#emails_ta")).controller("ngModel");
-
-			// Invoke formatter
-			var formatters = ctrl.$formatters,
-		          idx = formatters.length;
-		    
-		    while(idx--) {
-		        newValue = formatters[idx](newValue);
-		    }
-
-		    // Update viewValue and invoke render
-		    if (ctrl.$viewValue !== newValue) {
-		    	ctrl.$viewValue = newValue;
-		        ctrl.$render();
-		    }
-		}
-	}, true);
-
-	$scope.addEmail = function(email) {
-		/*
-		var emailList = $scope.emails;
-		emailList.push(email);
-		$scope.emails = angular.copy(emailList);
-		*/
-
-		$scope.emails.push(email);
-	}
-
-	$scope.goNext = function() {
-		$rootScope.vote.config.publicity = $scope.publicity;
-		$rootScope.vote.config.type = $scope.type;
-		$rootScope.vote.config.closeDuration = $scope.closeDuration;
-		$rootScope.vote.config.period = $scope.period;
-		$rootScope.vote.config.emails = $scope.emails;
-		console.log($rootScope.vote);
-		$state.transitionTo('step3');
-	}
 savControllers
 		.controller(
 				'ConfigVoteCtrl',
